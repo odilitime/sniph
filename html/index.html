@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Sniph demo</title>
+    <script src="js/common.js"></script>
+    <script src="js/encrypt.js"  ></script>
+    <script src="js/decrypt.js"  ></script>
+  </head>
+<body>
+<dl>
+  <dt>Rows
+  <dd><input id="rows" value="4">
+  <dt>Cols
+  <dd><input id="cols" value="4">
+  <dt>Depth
+  <dd><input id="depth" value="4">
+  <dt>Offset
+  <dd><input id="offset" value="4">
+  <dt>CharSet
+  <dd><input id="charset" value="" size=100>
+</dl>
+<dl>
+  <dt>Secret
+  <dd><input id="secret" value="ALICE BOB">
+  <dt>Plaintext
+  <dd><textarea id="plaintext">Hello World</textarea>
+  <button id="encodeBut">Encode</button>
+  <dt>Cipher
+  <dd><input id="code" size=255>
+  <button id="decodeBut">Decode</button>
+</dl>
+<script>
+  var char_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!:;\'\"/\\|<>+-=(){}[]`~@#$%^&*1234567890 \n'
+  var charElem = document.getElementById('charset')
+  charElem.value = char_set
+/*
+  var rows = 4 // 4-10
+  var cols = 4 // 4-10
+  var depth = 4 // 4-10?
+  var offset = 0
+  var passphrase = 'ALICE BOB'
+  var plaintext = 'Hello world'
+
+  // end inputs
+
+  var size = rows * cols
+*/
+  //console.log('common', common)
+
+  var encodeButElem = document.getElementById('encodeBut')
+  var decodeButElem = document.getElementById('decodeBut')
+
+  function encodeOnclick() {
+    var cols = document.getElementById('cols').value
+    var rows = document.getElementById('rows').value
+    var depth = document.getElementById('depth').value
+    var char_set = document.getElementById('charset').value
+    var passphrase = document.getElementById('secret').value
+    var offset = document.getElementById('offset').value
+    var plaintext = document.getElementById('plaintext').value
+    var size = rows * cols
+    char_set = scaleCharset(char_set, size)
+    var codes = sniph_encrypt(char_set, passphrase, plaintext, depth, rows, cols, offset)
+    var codeElem = document.getElementById('code')
+    codeElem.value = codes
+  }
+  function decodeOnclick() {
+    var cols = document.getElementById('cols').value
+    var rows = document.getElementById('rows').value
+    var depth = document.getElementById('depth').value
+    var char_set = document.getElementById('charset').value
+    var passphrase = document.getElementById('secret').value
+    var offset = document.getElementById('offset').value
+    var codes = document.getElementById('code').value
+    var size = rows * cols
+    char_set = scaleCharset(char_set, size)
+    var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols)
+    var plaintext = document.getElementById('plaintext')
+    plaintext.value = result
+  }
+  encodeButElem.onclick = encodeOnclick
+  decodeButElem.onclick = decodeOnclick
+
+  //console.log('char_set is now', char_set.length)
+
+  /*
+  console.log('encrypted codes', codes)
+  var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols)
+  //console.log('decrypted codes', result)
+  if (result != plaintext) console.error('DECRYPTION FAILED', result)
+  */
+
+</script>
+</body>
+</html>
