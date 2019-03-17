@@ -73,7 +73,7 @@
     var codes = document.getElementById('code').value
     var size = rows * cols
     char_set = scaleCharset(char_set, size)
-    var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols)
+    var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols, offset)
     var plaintext = document.getElementById('plaintext')
     plaintext.value = result
   }
