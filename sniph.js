@@ -3,25 +3,24 @@ const common = require('./lib/common.js')
 const sniph_encrypt = require('./lib/encrypt.js')
 const sniph_decrypt = require('./lib/decrypt.js')
 
-var rows = 4 // 4-10
-var cols = 4 // 4-10
-var depth = 4 // 4-10?
-var offset = 1
 var passphrase = 'ALICE BOB'
-var plaintext = 'Hello world'
-
+var plaintext  = 'Hello world'
+var char_set   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!:;\'\"/\\|<>+-=(){}[]`~@#$%^&*1234567890 \n'
 // end inputs
 
-var size = rows * cols
-var char_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!:;\'\"/\\|<>+-=(){}[]`~@#$%^&*1234567890 \n'
+var obj = common.secretToDimensions(passphrase)
+var cols  = obj.w // 4-10
+var rows  = obj.h // 4-10
+var depth = obj.d // 4-10
 
 // scale up charset to next "power of two" size
+var size = rows * cols
 char_set = common.scaleCharset(char_set, size)
 
-var codes = sniph_encrypt(char_set, passphrase, plaintext, depth, rows, cols, offset)
+var codes = sniph_encrypt(char_set, passphrase, plaintext, depth, rows, cols)
 console.log('encrypted codes', codes)
 
-var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols, offset)
+var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols)
 if (result != plaintext) console.error('DECRYPTION FAILED', result)
 
 // unit test to make sure the conversion works as expected
