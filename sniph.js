@@ -6,7 +6,7 @@ const sniph_decrypt = require('./lib/decrypt.js')
 var rows = 4 // 4-10
 var cols = 4 // 4-10
 var depth = 4 // 4-10?
-var offset = 0
+var offset = 1
 var passphrase = 'ALICE BOB'
 var plaintext = 'Hello world'
 
@@ -23,7 +23,7 @@ char_set = common.scaleCharset(char_set, size)
 
 var codes = sniph_encrypt(char_set, passphrase, plaintext, depth, rows, cols, offset)
 console.log('encrypted codes', codes)
-var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols)
+var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols, offset)
 //console.log('decrypted codes', result)
 if (result != plaintext) console.error('DECRYPTION FAILED', result)
 
