@@ -8,7 +8,7 @@ var plaintext  = 'Hello world'
 var char_set   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!:;\'\"/\\|<>+-=(){}[]`~@#$%^&*1234567890 \n'
 // end inputs
 
-var obj = common.secretToDimensions(passphrase)
+var obj = common.passphraseToDimensions(passphrase)
 var cols  = obj.w // 4-10
 var rows  = obj.h // 4-10
 var depth = obj.d // 4-10
