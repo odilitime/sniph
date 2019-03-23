@@ -15,18 +15,16 @@ var plaintext = 'Hello world'
 var size = rows * cols
 var char_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!:;\'\"/\\|<>+-=(){}[]`~@#$%^&*1234567890 \n'
 
-//console.log('common', common)
-
+// scale up charset to next "power of two" size
 char_set = common.scaleCharset(char_set, size)
-
-//console.log('char_set is now', char_set.length)
 
 var codes = sniph_encrypt(char_set, passphrase, plaintext, depth, rows, cols, offset)
 console.log('encrypted codes', codes)
+
 var result = sniph_decrypt(char_set, passphrase, codes, depth, rows, cols, offset)
-//console.log('decrypted codes', result)
 if (result != plaintext) console.error('DECRYPTION FAILED', result)
 
+// unit test to make sure the conversion works as expected
 /*
 var maxx = 16
 var maxy = 16
